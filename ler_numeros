@@ -13,23 +13,3 @@ void ler_numero(char num[], int A[], int *tam, int *negativo){
         A[i] = num[i + inicio] - '0';
     }
 }
-
-int soma(int A[], int tamA, int B[], int tamB, int S[]) {
- int i = tamA - 1, j = tamB - 1, k = MAX, resto = 0;
-    int temp[MAX + 1] = {0};
-
-    while (i >= 0 || j >= 0 || resto) {
-        int digA = (i >= 0) ? A[i--] : 0;
-        int digB = (j >= 0) ? B[j--] : 0;
-        temp[k--] = (digA + digB + resto) % 10;
-        resto = (digA + digB + resto) / 10;
-    }
-
-    int inicio = k + 1;
-    int digitos = MAX + 1 - inicio;
-
-    for (int x = 0; x < digitos; x++)
-        S[x] = temp[inicio + x];
-
-    return digitos;
-}
