@@ -1,0 +1,9 @@
+void imprime_resultado(int S[], int digitos, int negativo) {
+    if (negativo) 
+        printf("-");
+    int i = 0;
+    while (i < digitos - 1 && S[i] == 0) i++;
+    for (; i < digitos; i++)
+        printf("%d", S[i]);
+    printf("\n");
+}
