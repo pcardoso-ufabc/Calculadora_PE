@@ -1,0 +1,15 @@
+void ler_numero(char num[], int A[], int *tam, int *negativo){
+    int inicio = 0;
+    *negativo = 0;
+    
+    if(num[0] == '-'){
+        *negativo = 1;
+        inicio = 1;
+    }
+    
+    *tam = strlen(num) - inicio;
+    
+    for(int i = 0; i < *tam; i++){
+        A[i] = num[i + inicio] - '0';
+    }
+}

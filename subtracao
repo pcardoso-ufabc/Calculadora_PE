@@ -1,0 +1,45 @@
+int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg) {
+   int tempA[MAX], tempB[MAX];
+    memcpy(tempA, A, tamA * sizeof(int));
+    memcpy(tempB, B, tamB * sizeof(int));
+
+    *neg = 0;
+    if (!maior_ou_igual(tempA, tamA, tempB, tamB)) {
+        int temp[MAX];
+        memcpy(temp, tempA, sizeof(tempA));
+        memcpy(tempA, tempB, sizeof(tempB));
+        memcpy(tempB, temp, sizeof(temp));
+        int t = tamA; tamA = tamB; tamB = t;
+        *neg = 1;
+    }
+
+    int i = tamA - 1, j = tamB - 1, k = MAX, emprestimo = 0;
+    int temp[MAX + 1] = {0};
+
+    while (i >= 0) {
+        int digA = tempA[i] - emprestimo;
+        int digB = (j >= 0) ? tempB[j] : 0;
+
+        if (digA < digB) {
+            digA += 10;
+            emprestimo = 1;
+        } else {
+            emprestimo = 0;
+        }
+
+        temp[k--] = digA - digB;
+        i--; j--;
+    }
+
+    int inicio = k + 1;
+    while (inicio < MAX && temp[inicio] == 0)
+        inicio++;
+
+    int digitos = MAX + 1 - inicio;
+    if (digitos == 0) digitos = 1;
+
+    for (int x = 0; x < digitos; x++)
+        S[x] = temp[inicio + x];
+
+    return digitos;
+}

@@ -1,0 +1,9 @@
+int maior_ou_igual(int A[], int tamA, int B[], int tamB){
+    if (tamA != tamB)
+        return tamA > tamB;
+    for(int i = 0; i < tamA; i++){
+        if(A[i] != B[i])
+            return A[i] > B[i];
+    }
+    return 1;
+}
