@@ -76,7 +76,7 @@ int main() {
                     printf("Erro: Divisao por zero\n");
                 } else {
                     negativo = (negA != negB) ? 1 : 0;
-                    printf("Divisao: Quociente = ");
+                    printf("Divisao e ");
                     imprime_resultado(Q, digitos, negativo);
                 }            
             }else if(ope == 5)
