@@ -8,6 +8,7 @@ int soma(int A[], int tamA, int B[], int tamB, int S[]);
 int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg);
 int multiplicacao(int A[], int tamA, int B[], int tamB, int S[]);
 int maior_ou_igual(int A[], int tamA, int B[], int tamB);
+int divisao(int A[], int tamA, int B[], int tamB, int Q[], int R[], int *tamR);
 void imprime_resultado(int S[], int digitos, int negativo);
 
 int main() {
@@ -25,7 +26,7 @@ int main() {
     while(ope!=5){
         printf("Digite um opcao entre 1 e 5:\n Opcao 1 Soma\n Opcao 2 Subtracao\n Opcao 3 Multiplicao\n Opcao 4 Divisao\n Opcao 5 Sair\n");
         scanf("%d", &ope);
-        for (int i = 0; i < MAX + 1; i++)
+        for (int i = 0; i < 2 * MAX; i++)
             S[i] = 0;
         
             if (ope == 1){
@@ -65,11 +66,19 @@ int main() {
                 digitos = multiplicacao(A, tamA, B, tamB, S);
                 negativo = (negA != negB) ? 1 : 0;
                 imprime_resultado(S, digitos, negativo);            
-            //else if(ope == 4){
-                //if (num_2 != 0)
-                    //printf("Divisao e %d\n", (float)num_1/num_2);
-                //else 
-                    //("Erro: Divisao por zero\n");
+            } else if(ope == 4){
+                int Q[MAX], R[MAX];
+                int tamR = 0;
+                
+                digitos = divisao(A, tamA, B, tamB, Q, R, &tamR);
+                
+                if (digitos == -1) {
+                    printf("Erro: Divisao por zero\n");
+                } else {
+                    negativo = (negA != negB) ? 1 : 0;
+                    printf("Divisao: Quociente = ");
+                    imprime_resultado(Q, digitos, negativo);
+                }            
             }else if(ope == 5)
                 printf("Operação encerrada\n");
             else
@@ -164,12 +173,10 @@ int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg) {
 int multiplicacao(int A[], int tamA, int B[], int tamB, int S[]) {
     int tamanhoMax = tamA + tamB;
     
-    // Para cada dígito de B (da direita para esquerda)
     for (int i = tamB - 1; i >= 0; i--) {
         int carry = 0;
-        int deslocamento = tamB - 1 - i; // Quantas posições deslocar
+        int deslocamento = tamB - 1 - i; 
         
-        // Multiplica todo A por este dígito de B
         for (int j = tamA - 1; j >= 0; j--) {
             int posicao = tamanhoMax - 1 - deslocamento - (tamA - 1 - j);
             int produto = A[j] * B[i] + S[posicao] + carry;
@@ -177,19 +184,91 @@ int multiplicacao(int A[], int tamA, int B[], int tamB, int S[]) {
             carry = produto / 10;
         }
         
-        // Coloca o carry restante
         if (carry > 0) {
             int posicao = tamanhoMax - 1 - deslocamento - tamA;
             S[posicao] += carry;
         }
     }
     
-    // Remove zeros à esquerda
     int inicio = 0;
     while (inicio < tamanhoMax - 1 && S[inicio] == 0)
         inicio++;
     
-    return tamanhoMax - inicio;
+    int digitos = tamanhoMax - inicio;
+
+    for (int x = 0; x < digitos; x++)
+        S[x] = S[inicio + x];
+
+    return digitos;
+}
+
+int divisao(int A[], int tamA, int B[], int tamB, int Q[], int R[], int *tamR) {
+    // Verifica divisão por zero
+    if (tamB == 1 && B[0] == 0) {
+        return -1;
+    }
+    
+    // Se A < B, quociente = 0, resto = A
+    if (!maior_ou_igual(A, tamA, B, tamB)) {
+        Q[0] = 0;
+        for (int i = 0; i < tamA; i++)
+            R[i] = A[i];
+        *tamR = tamA;
+        return 1;
+    }
+    
+    int resto[2 * MAX] = {0};
+    int tamResto = 0;
+    int quociente[MAX] = {0};
+    int tamQuociente = 0;
+    
+    // Para cada dígito de A
+    for (int i = 0; i < tamA; i++) {
+        // Traz o próximo dígito
+        resto[tamResto++] = A[i];
+        
+        // Remove zeros à esquerda
+        int inicio = 0;
+        while (inicio < tamResto - 1 && resto[inicio] == 0)
+            inicio++;
+        if (inicio > 0) {
+            for (int j = 0; j < tamResto - inicio; j++)
+                resto[j] = resto[inicio + j];
+            tamResto -= inicio;
+        }
+        
+        // Conta quantas vezes B cabe
+        int digito = 0;
+        while (digito < 10 && maior_ou_igual(resto, tamResto, B, tamB)) {
+            int temp[2 * MAX];
+            int neg = 0;
+            int novoTam = subtracao(resto, tamResto, B, tamB, temp, &neg);
+            
+            for (int j = 0; j < novoTam; j++)
+                resto[j] = temp[j];
+            tamResto = novoTam;
+            
+            digito++;
+        }
+        
+        quociente[tamQuociente++] = digito;
+    }
+    
+    // Remove zeros à esquerda do quociente
+    int inicio = 0;
+    while (inicio < tamQuociente - 1 && quociente[inicio] == 0)
+        inicio++;
+    
+    int tamQ = tamQuociente - inicio;
+    for (int i = 0; i < tamQ; i++)
+        Q[i] = quociente[inicio + i];
+    
+    // Copia o resto
+    for (int i = 0; i < tamResto; i++)
+        R[i] = resto[i];
+    *tamR = tamResto;
+    
+    return tamQ;
 }
 
 int maior_ou_igual(int A[], int tamA, int B[], int tamB){
