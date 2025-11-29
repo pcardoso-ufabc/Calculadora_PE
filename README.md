@@ -4,7 +4,7 @@
 gcc -c operacoes.c -o operacoes.o
 ```
 
-Aqui a gente pega o arquivo operacoes.c que tá as funções de soma, subtração, etc e transforma em operacoes.o, que é a versão compilada dele mas que não da pra executar ainda
+Aqui a gente pega o arquivo operacoes.c que tá as funções de soma, subtração, etc e transforma em operacoes.o, que é a versão compilada dele mas que não da pra executar ainda.
 Assim só essa parte é compilada, quando precisar fazer alguma alteração nas operações, só esse arquivo precisa ser recompilado
 
 ```bash
