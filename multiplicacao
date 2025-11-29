@@ -1,0 +1,31 @@
+int multiplicacao(int A[], int tamA, int B[], int tamB, int S[]) {
+  int tamanhoMax = tamA + tamB;
+  
+  for (int i = tamB - 1; i >= 0; i--) {
+      int carry = 0;
+      int deslocamento = tamB - 1 - i; 
+      
+      for (int j = tamA - 1; j >= 0; j--) {
+          int posicao = tamanhoMax - 1 - deslocamento - (tamA - 1 - j);
+          int produto = A[j] * B[i] + S[posicao] + carry;
+          S[posicao] = produto % 10;
+          carry = produto / 10;
+      }
+      
+      if (carry > 0) {
+          int posicao = tamanhoMax - 1 - deslocamento - tamA;
+          S[posicao] += carry;
+      }
+  }
+  
+  int inicio = 0;
+  while (inicio < tamanhoMax - 1 && S[inicio] == 0)
+      inicio++;
+  
+  int digitos = tamanhoMax - inicio;
+
+  for (int x = 0; x < digitos; x++)
+      S[x] = S[inicio + x];
+
+  return digitos;
+}
