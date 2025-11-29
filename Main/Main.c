@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include operacoes.h
+#include "operacoes.h"
 
 #define MAX 101
 
