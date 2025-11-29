@@ -1,0 +1,59 @@
+typedef struct Node {
+    int digito;
+    struct Node* prox;
+} Node;
+
+Node* criar_no(int dado) {
+    Node* novo = (Node*)malloc(sizeof(Node));
+    if (novo == NULL) exit(1);
+    novo->digito = dado;
+    novo->prox = NULL;
+    return novo;
+}
+
+void imprimir_recursivo_aux(Node* no) {
+    if (no == NULL) return;
+    imprimir_recursivo_aux(no->prox);
+    printf("%d", no->digito);
+}
+
+void liberar_lista_aux(Node* head) {
+    Node* atual = head;
+    while (atual != NULL) {
+        Node* temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+}
+
+void fatorial(int n) {
+    if (n < 0) return;
+    
+    Node* head = criar_no(1);
+    
+    for (int i = 2; i <= n; i++) {
+        Node* atual = head;
+        Node* anterior = NULL;
+        int carry = 0;
+
+        while (atual != NULL) {
+            int produto = (atual->digito * i) + carry;
+            atual->digito = produto % 10;
+            carry = produto / 10;
+            anterior = atual;
+            atual = atual->prox;
+        }
+
+        while (carry > 0) {
+            Node* novo = criar_no(carry % 10);
+            anterior->prox = novo;
+            anterior = novo;
+            carry = carry / 10;
+        }
+    }
+
+    imprimir_recursivo_aux(head);
+    printf("\n");
+    
+    liberar_lista_aux(head);
+}
