@@ -46,6 +46,111 @@ int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg) {
     return digitos;
 }
 
+//Multiplicacao
+
+int multiplicacao(int A[], int tamA, int B[], int tamB, int S[]) {
+    int tamanhoMax = tamA + tamB;
+    
+    for (int i = tamB - 1; i >= 0; i--) {
+        int carry = 0;
+        int deslocamento = tamB - 1 - i; 
+        
+        for (int j = tamA - 1; j >= 0; j--) {
+            int posicao = tamanhoMax - 1 - deslocamento - (tamA - 1 - j);
+            int produto = A[j] * B[i] + S[posicao] + carry;
+            S[posicao] = produto % 10;
+            carry = produto / 10;
+        }
+        
+        if (carry > 0) {
+            int posicao = tamanhoMax - 1 - deslocamento - tamA;
+            S[posicao] += carry;
+        }
+    }
+    
+    int inicio = 0;
+    while (inicio < tamanhoMax - 1 && S[inicio] == 0)
+        inicio++;
+    
+    int digitos = tamanhoMax - inicio;
+
+    for (int x = 0; x < digitos; x++)
+        S[x] = S[inicio + x];
+
+    return digitos;
+}
+
+//Divisao
+
+int divisao(int A[], int tamA, int B[], int tamB, int Q[], int R[], int *tamR) {
+    // Verifica divisão por zero
+    if (tamB == 1 && B[0] == 0) {
+        return -1;
+    }
+    
+    // Se A < B, quociente = 0, resto = A
+    if (!maior_ou_igual(A, tamA, B, tamB)) {
+        Q[0] = 0;
+        for (int i = 0; i < tamA; i++)
+            R[i] = A[i];
+        *tamR = tamA;
+        return 1;
+    }
+    
+    int resto[2 * MAX] = {0};
+    int tamResto = 0;
+    int quociente[MAX] = {0};
+    int tamQuociente = 0;
+    
+    // Para cada dígito de A
+    for (int i = 0; i < tamA; i++) {
+        // Traz o próximo dígito
+        resto[tamResto++] = A[i];
+        
+        // Remove zeros à esquerda
+        int inicio = 0;
+        while (inicio < tamResto - 1 && resto[inicio] == 0)
+            inicio++;
+        if (inicio > 0) {
+            for (int j = 0; j < tamResto - inicio; j++)
+                resto[j] = resto[inicio + j];
+            tamResto -= inicio;
+        }
+        
+        // Conta quantas vezes B cabe
+        int digito = 0;
+        while (digito < 10 && maior_ou_igual(resto, tamResto, B, tamB)) {
+            int temp[2 * MAX];
+            int neg = 0;
+            int novoTam = subtracao(resto, tamResto, B, tamB, temp, &neg);
+            
+            for (int j = 0; j < novoTam; j++)
+                resto[j] = temp[j];
+            tamResto = novoTam;
+            
+            digito++;
+        }
+        
+        quociente[tamQuociente++] = digito;
+    }
+    
+    // Remove zeros à esquerda do quociente
+    int inicio = 0;
+    while (inicio < tamQuociente - 1 && quociente[inicio] == 0)
+        inicio++;
+    
+    int tamQ = tamQuociente - inicio;
+    for (int i = 0; i < tamQ; i++)
+        Q[i] = quociente[inicio + i];
+    
+    // Copia o resto
+    for (int i = 0; i < tamResto; i++)
+        R[i] = resto[i];
+    *tamR = tamResto;
+    
+    return tamQ;
+}
+
 //Soma
 
 int soma(int A[], int tamA, int B[], int tamB, int S[]) {
@@ -158,3 +263,4 @@ void fatorial(int n) {
     
     liberar_lista_aux(head);
 }
+
