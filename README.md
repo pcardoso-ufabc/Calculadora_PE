@@ -1,4 +1,4 @@
-#Como compilar o arquivo
+# Como compilar o arquivo
 
 ```bash
 gcc -c operacoes.c -o operacoes.o
