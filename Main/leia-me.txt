@@ -1,0 +1,49 @@
+Calculadora de Inteiros com Aritmética de Grande Porte
+
+Este programa implementa uma calculadora de inteiros capaz de operar com números
+de até 100 dígitos, utilizando vetores para representar os operandos. São
+implementadas as operações de soma, subtração, multiplicação e divisão inteira,
+incluindo tratamento de sinais e de divisão por zero.
+
+Arquivos principais
+- main.c          : contém a função principal (main) e a lógica do menu de operações.
+- operacoes.h     : declara os protótipos das funções de leitura, operações e impressão.
+- operacoes.c     : implementa as funções de soma, subtração, multiplicação, divisão,
+                    leitura dos números e impressão do resultado.
+
+- Compilador: GCC (GNU Compiler Collection)
+
+Bibliotecas utilizadas
+- <stdio.h>   : entrada e saída padrão (printf, scanf).
+- <string.h>  : manipulação de strings (strlen, etc.).
+- "operacoes.h": cabeçalho do módulo de operações implementado pelo próprio grupo.
+
+Instruções de compilação
+A compilação é feita de forma modular, em três etapas principais:
+
+1) Compilação do módulo de operações
+
+    gcc -c operacoes.c -o operacoes.o
+
+Este comando compila apenas o arquivo operacoes.c e gera o arquivo objeto
+operacoes.o, que contém o código das funções de operação em formato compilado,
+mas ainda não executável.
+
+2) Compilação do módulo principal (main)
+
+    gcc -c main.c -o main.o
+
+Este comando compila separadamente o arquivo main.c, gerando o arquivo objeto
+main.o, que contém a função main()
+
+3) Etapa de linkagem
+
+    gcc main.o operacoes.o -o calculadora
+
+Nesta etapa, os arquivos objeto main.o e operacoes.o são ligados, resultando
+no executável final denominado "calculadora". Os arquivos .o isoladamente não
+podem ser executados, pois ainda não formam um programa completo.
+
+Após a compilação, o programa pode ser executado com:
+
+    ./calculadora
