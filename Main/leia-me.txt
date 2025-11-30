@@ -6,12 +6,10 @@ implementadas as operações de soma, subtração, multiplicação e divisão in
 incluindo tratamento de sinais e de divisão por zero.
 
 Arquivos principais
-- main.c          : contém a função principal (main) e a lógica do menu de operações.
+- main.c          : contém a função principal (main)
 - operacoes.h     : declara os protótipos das funções de leitura, operações e impressão.
 - operacoes.c     : implementa as funções de soma, subtração, multiplicação, divisão,
                     leitura dos números e impressão do resultado.
-
-- Compilador: GCC (GNU Compiler Collection)
 
 Bibliotecas utilizadas
 - <stdio.h>   : entrada e saída padrão (printf, scanf).
@@ -19,6 +17,7 @@ Bibliotecas utilizadas
 - "operacoes.h": cabeçalho do módulo de operações implementado pelo próprio grupo.
 
 Instruções de compilação
+Compilador: GCC (GNU Compiler Collection)
 A compilação é feita de forma modular, em três etapas principais:
 
 1) Compilação do módulo de operações
@@ -45,5 +44,6 @@ no executável final denominado "calculadora". Os arquivos .o isoladamente não
 podem ser executados, pois ainda não formam um programa completo.
 
 Após a compilação, o programa pode ser executado com:
+
 
     ./calculadora
