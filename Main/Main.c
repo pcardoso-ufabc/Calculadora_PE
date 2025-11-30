@@ -22,7 +22,7 @@ int main() {
                " Opcao 2 Subtracao\n"
                " Opcao 3 Multiplicao\n"
                " Opcao 4 Divisao\n"
-               " Opcao 5 Fatorial (operacao personalizada)\n"
+               " Opcao 5 Fatorial\n"
                " Opcao 6 Sair\n");
         scanf("%d", &ope);
 
