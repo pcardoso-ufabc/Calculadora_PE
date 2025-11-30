@@ -82,11 +82,18 @@ int main() {
             }
 
         } else if (ope == 5) {
-            int n;
-            printf("Digite um valor inteiro (pequeno) para o fatorial: ");
-            scanf("%d", &n);
-            printf("Fatorial e ");
-            fatorial(n);
+            if (negA) {
+                printf("Fatorial nao definido para numeros negativos.\n");
+            } else {
+                int n = 0;
+                for (int i = 0; i < tamA; i++) {
+                    n = n * 10 + A[i]; 
+                }
+                printf("Fatorial de ");
+                imprime_resultado(A, tamA, 0);
+                printf("e ");
+                fatorial(n);
+            }
 
         } else if(ope == 6) {
             printf("Operacao encerrada\n");
