@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <string.h>
+#include "operacoes.h"
+
 //Subtracao
 
 int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg) {
@@ -263,4 +267,5 @@ void fatorial(int n) {
     
     liberar_lista_aux(head);
 }
+
 
