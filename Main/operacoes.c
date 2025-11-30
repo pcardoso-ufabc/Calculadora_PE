@@ -2,6 +2,14 @@
 #include <string.h>
 #include "operacoes.h"
 
+Node* criar_no(int dado) {
+    Node* novo = (Node*)malloc(sizeof(Node));
+    if (novo == NULL) exit(1);
+    novo->digito = dado;
+    novo->prox = NULL;
+    return novo;
+}
+
 //Subtracao
 
 int subtracao(int A[], int tamA, int B[], int tamB, int S[], int *neg) {
@@ -267,5 +275,6 @@ void fatorial(int n) {
     
     liberar_lista_aux(head);
 }
+
 
 
