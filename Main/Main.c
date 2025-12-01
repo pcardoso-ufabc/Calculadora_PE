@@ -17,7 +17,7 @@ int main() {
     ler_numero(num_2, B, &tamB, &negB);
     
     while (ope != 7) {
-        printf("Digite uma opcao entre 1 e 6:\n"
+        printf("Digite uma opcao entre 1 e 7:\n"
                " Opcao 1 Soma\n"
                " Opcao 2 Subtracao\n"
                " Opcao 3 Multiplicao\n"
