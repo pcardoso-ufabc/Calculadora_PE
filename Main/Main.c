@@ -16,14 +16,15 @@ int main() {
     ler_numero(num_1, A, &tamA, &negA);
     ler_numero(num_2, B, &tamB, &negB);
     
-    while (ope != 6) {
+    while (ope != 7) {
         printf("Digite uma opcao entre 1 e 6:\n"
                " Opcao 1 Soma\n"
                " Opcao 2 Subtracao\n"
                " Opcao 3 Multiplicao\n"
                " Opcao 4 Divisao\n"
                " Opcao 5 Fatorial\n"
-               " Opcao 6 Sair\n");
+               " Opcao 6 Modulo\n"
+               " Opcao 7 Sair\n");
         scanf("%d", &ope);
 
         for (int i = 0; i < 2 * MAX; i++)
@@ -94,8 +95,20 @@ int main() {
                 printf("e ");
                 fatorial(n);
             }
-
-        } else if(ope == 6) {
+        } else if(ope == 6){
+            int Q[MAX], R[MAX];
+            int tamR = 0;
+            
+            digitos = divisao(A, tamA, B, tamB, Q, R, &tamR);
+            
+            if (digitos == -1) {
+                printf("Erro: Divisao por zero\n");
+            } else {
+                negativo = (negA != negB) ? 1 : 0;
+                printf("Modulo e ");
+                imprime_resultado(R, digitos, negativo);
+            }
+        } else if(ope == 7) {
             printf("Operacao encerrada\n");
         } else {
             printf("Operacao invalida\n");
