@@ -106,7 +106,7 @@ int main() {
             } else {
                 negativo = (negA != negB) ? 1 : 0;
                 printf("Modulo e ");
-                imprime_resultado(R, digitos, negativo);
+                imprime_resultado(R, tamR, 0);
             }
         } else if(ope == 7) {
             printf("Operacao encerrada\n");
